@@ -3,8 +3,8 @@ from menu import ColourText, print_colour
 
 def get_inventory():
     # Get the sheet
-    # sheet_name = input("Enter filepath to spreadsheet: ").strip()  # TEMP COMMENT: hard coding the test file name for now
-    excel_file = "test/test_3_sheets_missing_one_corp_one_demo.xlsx"
+    sheet_name = input("Enter filepath to spreadsheet: ").strip()
+    # excel_file = "test/test_3_sheets_missing_one_corp_one_demo.xlsx"
     data = pd.read_excel(excel_file, sheet_name=None)
     if data is None:
         raise Exception(f"Could not read file {excel_file}. Please make sure the filepath is correct and the file is an Excel file.")
