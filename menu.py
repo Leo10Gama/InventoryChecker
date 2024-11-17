@@ -1,4 +1,17 @@
+from enum import Enum
 from typing import Dict
+
+
+class ColourText(Enum):
+    RED = '\033[91m'
+    GREEN = '\033[92m'
+    END = '\033[0m'
+    BOLD = '\033[1m'
+
+
+def print_colour(colour: ColourText, message: str):
+    """Print a statement with a given colour."""
+    print(f"{colour.value}{message}{ColourText.END.value}")
 
 
 def option_picker(prompt: str, options: Dict[str, str]):
