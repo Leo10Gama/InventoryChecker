@@ -23,10 +23,11 @@ def get_inventory():
     for sheet_name in sheet_names:
         sheet = data[sheet_name]
         serial_index = sheet.columns[1]
-        inventory_serial_numbers[sheet.columns[1]] = sheet_name  # iterrows doesn't capture first row
+        inventory_serial_numbers[str(serial_index)] = sheet_name  # iterrows doesn't capture first row
         for _, serial_number in sheet.iterrows():
             if not serial_number[serial_index]: continue  # entry is empty
-            inventory_serial_numbers[serial_number[serial_index]] = sheet_name
+            serial_number_name = str(serial_number[serial_index])
+            inventory_serial_numbers[serial_number_name] = sheet_name
 
     # Iterate through corp and demo sheets and print matches and non-matches
     # ASSUMPTION: The column with the serial numbers is named exactly according to the constant below
@@ -38,11 +39,12 @@ def get_inventory():
         if header != SERIAL_NUMBERS_COLUMN_HEADER:
             continue
         # This is the column with serial numbers
+        inventory_nums = [str(x) for x in inventory_serial_numbers.keys()]
         for serial_number in corp_sheet[header]:
             if str(serial_number) == "nan":  # entry is empty
                 print_colour(ColourText.YELLOW, f"[ EMPTY ]:")
                 continue
-            if serial_number in inventory_serial_numbers.keys():  # Match value in inventory
+            if serial_number in inventory_nums:  # Match value in inventory
                 print_colour(ColourText.GREEN, f"[ MATCH ]: {serial_number} in {inventory_serial_numbers[serial_number]}")
                 del inventory_serial_numbers[serial_number]
             else:                                                 # No match in inventory
@@ -56,11 +58,12 @@ def get_inventory():
         if header != SERIAL_NUMBERS_COLUMN_HEADER:
             continue
         # This is the column with serial numbers
-        for serial_number in demo_sheet[header]:
+        inventory_nums = [str(x) for x in inventory_serial_numbers.keys()]
+        for serial_number in corp_sheet[header]:
             if str(serial_number) == "nan":  # entry is empty
                 print_colour(ColourText.YELLOW, f"[ EMPTY ]:")
                 continue
-            if serial_number in inventory_serial_numbers.keys():  # Match value in inventory
+            if serial_number in inventory_nums:  # Match value in inventory
                 print_colour(ColourText.GREEN, f"[ MATCH ]: {serial_number} in {inventory_serial_numbers[serial_number]}")
                 del inventory_serial_numbers[serial_number]
             else:                                                 # No match in inventory
