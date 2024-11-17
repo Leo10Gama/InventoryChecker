@@ -4,8 +4,8 @@ from menu import ColourText, print_colour
 
 def get_inventory():
     # Get the sheet
-    # excel_file = input("Enter filepath to spreadsheet: ").strip()
-    excel_file = "test/Lawo Corp_year end inventory QB list.xlsx"
+    excel_file = input("Enter filepath to spreadsheet: ").strip()
+    # excel_file = "test/Lawo Corp_year end inventory QB list.xlsx"
     data = pd.read_excel(excel_file, sheet_name=None)
     if data is None:
         raise Exception(f"Could not read file {excel_file}. Please make sure the filepath is correct and the file is an Excel file.")
